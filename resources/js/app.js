@@ -21,7 +21,7 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
-Vue.component('stuff-component', require('./components/ExampleComponent.vue'));
+Vue.component('drawer', require('./components/ExampleComponent.vue'));
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -34,8 +34,9 @@ import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import vuetify from '@/plugins/vuetify'
 
-
 Vue.use(Vuetify)
+
+
 
 
 
@@ -50,6 +51,9 @@ const app = new Vue({
     el: '#app',
     router:Routes,
    vuetify,
+   $_veeValidate: {
+    validator: 'new',
+  },
     render: h=> h(App),
 });
 

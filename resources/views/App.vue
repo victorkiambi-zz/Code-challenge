@@ -1,33 +1,26 @@
 <template>
-    <v-app>
-
-        <v-navigation-drawer app>
-
-            
-
-                <v-container fluid>
-                  <router-link to="/">login</router-link>
-                   <router-link to="/supplier">Go to Bar</router-link>
-
-                    <router-view>
-                    </router-view>
-                </v-container>
-            
-        </v-navigation-drawer>
-
-    </v-app>
+    <Toolbar></Toolbar>
 </template>
 
+
+
 <script>
-import Vue from 'vue'
-import Vuetify from 'vuetify'
-import 'vuetify/dist/vuetify.min.css'
+import  Drawer  from '@/js/components/Drawer.vue';
+import  Toolbar  from '@/js/components/Toolbar.vue';
 
-Vue.use(Vuetify)
+    export default {
 
+        components: {
+            Drawer,
+            Toolbar,
 
-
-export default {
+        },
+         data() {
+    return {
+      drawer: false
+    }
     
-}
+  }
+  
+    }
 </script>

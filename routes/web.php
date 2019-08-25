@@ -11,4 +11,8 @@
 |
 */
 
-Route::get('/{any}', 'SinglePageController@index')->where('any', '.*');
+Route::get('/', 'SinglePageController@index')->where('any', '.*');
+
+Route::get('/store','SuppliersController@store');
+
+Route::get('/show','SuppliersController@show');
