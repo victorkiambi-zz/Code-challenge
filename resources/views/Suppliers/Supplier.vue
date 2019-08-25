@@ -1,17 +1,81 @@
 <template>
+<v-container>
+    <div>
+<template>
+  <v-row>
+      <v-col>
+    <v-btn
+      color="primary"
+      dark
+      @click.stop="dialog = true"
+    >
+      Add Supplier
+    </v-btn>
+
+    <v-dialog
+      v-model="dialog"
+      max-width="290"
+    >
+      <v-card>
+        <v-card-title class="headline">Add Supplier</v-card-title>
+
+        <v-card-text>
+
+             <div>
+                        <form @submit.prevent="handleSubmit">
+                            <div class="form-group">
+                                <label for="Supplier">name</label>
+                                <input type="text" v-model="supplier.name" id="name" name="name" class="form-control" :class="{ 'is-invalid': submitted && $v.supplier.name.$error }" />
+                                <div v-if="submitted && !$v.supplier.name.required" class="invalid-feedback">name is required</div>
+                            </div>
+                              <div class="form-group">
+                                <button class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
+             </div>
+
+        </v-card-text>
+
+        <v-card-actions>
+          <div class="flex-grow-1"></div>
+
+        
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+      </v-col>
+  </v-row>
+</template> </div>
+
+ <div>
+     <v-container>
   <v-data-table
     :headers="headers"
     :items="desserts"
     :items-per-page="5"
     class="elevation-1"
   ></v-data-table>
+     </v-container>
+     </div>
+</v-container>
 </template>
 
 
 <script>
+import Vue from 'vue';
+import Vuelidate from 'vuelidate';
+
+
+Vue.use(Vuelidate);
+
+    import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
+
+
+
   export default {
     data () {
       return {
+          dialog: false,
         headers: [
           {
             text: 'Dessert (100g serving)',
@@ -20,10 +84,7 @@
             value: 'name',
           },
           { text: 'Calories', value: 'calories' },
-          { text: 'Fat (g)', value: 'fat' },
-          { text: 'Carbs (g)', value: 'carbs' },
-          { text: 'Protein (g)', value: 'protein' },
-          { text: 'Iron (%)', value: 'iron' },
+         
         ],
         desserts: [
           {
@@ -42,72 +103,38 @@
             protein: 4.3,
             iron: '1%',
           },
-          {
-            name: 'Eclair',
-            calories: 262,
-            fat: 16.0,
-            carbs: 23,
-            protein: 6.0,
-            iron: '7%',
-          },
-          {
-            name: 'Cupcake',
-            calories: 305,
-            fat: 3.7,
-            carbs: 67,
-            protein: 4.3,
-            iron: '8%',
-          },
-          {
-            name: 'Gingerbread',
-            calories: 356,
-            fat: 16.0,
-            carbs: 49,
-            protein: 3.9,
-            iron: '16%',
-          },
-          {
-            name: 'Jelly bean',
-            calories: 375,
-            fat: 0.0,
-            carbs: 94,
-            protein: 0.0,
-            iron: '0%',
-          },
-          {
-            name: 'Lollipop',
-            calories: 392,
-            fat: 0.2,
-            carbs: 98,
-            protein: 0,
-            iron: '2%',
-          },
-          {
-            name: 'Honeycomb',
-            calories: 408,
-            fat: 3.2,
-            carbs: 87,
-            protein: 6.5,
-            iron: '45%',
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-            iron: '22%',
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-            iron: '6%',
-          },
+
         ],
+
+         supplier: {
+                    name:"",
+                   
+                },
+                submitted: false
+            };
+        },
+        validations: {
+            supplier: {
+                name: { required },
+               
+            }
+        },
+        methods: {
+            handleSubmit(e) {
+                this.submitted = true;
+
+                // stop here if form is invalid
+                this.$v.$touch();
+                if (this.$v.$invalid) {
+
+                    console.log("try again")
+                    return;
+                }
+
+                alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.supplier));
+            }
+        },
       }
-    },
-  }
+    
+  
 </script>
